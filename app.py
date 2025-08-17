@@ -12,6 +12,13 @@ def list_containers():
     for container in client.containers.list(all=True):
         print(container.name)
 
+@click.command()
+def list_unhealthy():
+    for container in client.containers.list(all=True):
+        if container.attrs.get('State', {}).get('Health', {}).get('Status') == 'unhealthy':
+            print(f"{container.name} - {container.status}")
+
+cli.add_command(list_unhealthy)
 cli.add_command(list_containers)
 
 if __name__ == "__main__":

@@ -16,3 +16,7 @@ source ~/.bashrc
 ```bash
 watchcat list-containers
 ```
+
+```bash
+watchcat list_unhealthy
+```
