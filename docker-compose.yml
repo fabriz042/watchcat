@@ -1,5 +1,5 @@
 services:
-  monitor:
+  watchcat:
     container_name: watchcat
     labels:
       - monitoring
