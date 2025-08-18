@@ -4,6 +4,8 @@ services:
     labels:
       - monitoring
     build: .
+    command: ["enable"]
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
