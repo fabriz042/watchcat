@@ -24,3 +24,7 @@ watchcat list_unhealthy
 ```bash
 watchcat enable
 ```
+
+```bash
+watchcat disable
+```
