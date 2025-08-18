@@ -20,3 +20,7 @@ watchcat list-containers
 ```bash
 watchcat list_unhealthy
 ```
+
+```bash
+watchcat enable
+```
