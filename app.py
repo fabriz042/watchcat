@@ -22,7 +22,19 @@ def list_unhealthy():
             print(f"{container.name} - {container.status}")
 
 @click.command() 
-def enable():    
+def enable():
+    try:
+        watchcat_container = client.containers.get('watchcat')
+        if watchcat_container.status == 'paused':
+            watchcat_container.unpause()
+            print("Watchcat resumed")
+            return
+        elif watchcat_container.status == 'running':
+            print("Watchcat is already running")
+            return
+    except docker.errors.NotFound:
+        pass
+    
     print("Watchcat enabled, monitoring unhealthy containers every 1 minute")
     
     pid = os.fork()
@@ -41,8 +53,8 @@ def enable():
 def disable():
     try:
         watchcat_container = client.containers.get('watchcat')
-        watchcat_container.stop()
-        print("Watchcat stopped")
+        watchcat_container.pause()
+        print("Watchcat paused")
     except docker.errors.NotFound:
         print("Watchcat container not found")
 
