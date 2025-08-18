@@ -7,24 +7,6 @@ Docker container monitoring tool
 Add alias for easy usage:
 
 ```bash
-echo "alias watchcat='docker compose run --rm watchcat'" >> ~/.bashrc
-source ~/.bashrc
-```
-
-## Usage
-
-```bash
-watchcat list-containers
-```
-
-```bash
-watchcat list_unhealthy
-```
-
-```bash
-watchcat enable
-```
-
-```bash
-watchcat disable
+git clone https://github.com/fabriz042/watchcat.git
+docker compose up -d
 ```
