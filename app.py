@@ -3,6 +3,7 @@ import docker
 import time
 import sys
 import os
+import threading
 
 client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
@@ -22,7 +23,7 @@ def list_unhealthy():
             print(f"{container.name} - {container.status}")
 
 @click.command() 
-def enable():
+def enable():    
     try:
         watchcat_container = client.containers.get('watchcat')
         if watchcat_container.status == 'paused':
@@ -35,10 +36,7 @@ def enable():
     except docker.errors.NotFound:
         pass
     
-    print("Watchcat enabled, monitoring unhealthy containers every 1 minute")
-    
-    pid = os.fork()
-    if pid == 0:
+    def monitor_loop():
         while True:
             for container in client.containers.list(all=True):
                 health = container.attrs.get('State', {}).get('Health', {}).get('Status')
@@ -46,7 +44,17 @@ def enable():
                     print(f"{container.name} is unhealthy. Restarting...")
                     container.restart()
             time.sleep(60)
-    else:
+    
+    thread = threading.Thread(target=monitor_loop, daemon=True)
+    thread.start()
+    print("Watchcat enabled, monitoring unhealthy containers every 1 minute")
+    
+    # Mantener el proceso principal vivo
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Stopping watchcat...")
         sys.exit(0)
 
 @click.command()
