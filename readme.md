@@ -35,7 +35,7 @@ Watchcat connects to the Docker socket and continuously monitors container healt
 
 ## Configuration
 
-The monitoring interval is set to 5 minutes by default. To change this, modify the `time.sleep(300)` value in `app.py` (300 seconds = 5 minutes).
+The monitoring interval is set to 5 minutes by default. To change this, modify the `minutes = 5` value in `app.py`.
 
 ## Logs
 
