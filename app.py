@@ -1,11 +1,13 @@
 import docker
 import time
 import sys
+import os
 from datetime import datetime
 
 client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 def log_restart(container_name):
+    os.makedirs('/logs', exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open('/logs/restarts.log', 'a') as f:
         f.write(f"{timestamp} - Restarted container: {container_name}\n")

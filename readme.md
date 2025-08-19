@@ -1,13 +1,12 @@
 # Watchcat
 
-Simple docker container monitoring tool that automatically restarts unhealthy containers.
+Simple Docker container monitoring tool that automatically restarts unhealthy containers and records logs.
 
 ## Features
 
 - Monitors all running Docker containers every 5 minutes
 - Automatically restarts containers with `unhealthy` health status
 - Excludes itself from monitoring to prevent infinite loops
-- Lightweight Python-based solution
 
 ## Prerequisites
 
@@ -40,8 +39,19 @@ The monitoring interval is set to 5 minutes by default. To change this, modify t
 
 ## Logs
 
-View monitoring logs with:
+### Watch restart events log
+
+Restart events are saved to a host folder for easy viewing:
 
 ```bash
-docker compose logs -f watchcat
+# View all restart events
+cat ./logs/restarts.log
+```
+
+Example output:
+
+```
+2025-01-18 14:30:15 - Restarted container: webapp
+2025-01-18 15:45:22 - Restarted container: database
+2025-01-18 16:12:08 - Restarted container: redis
 ```
