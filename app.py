@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 
 client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+minutes = 5
 
 def log_restart(container_name):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -11,7 +12,7 @@ def log_restart(container_name):
         f.write(f"{timestamp} - Restarted container: {container_name}\n")
 
 def main():
-    print("Watchcat enabled, monitoring unhealthy containers every 5 minute")
+    print(f"Watchcat enabled, monitoring unhealthy containers every {minutes} minutes")
 
     while True:
         for container in client.containers.list(all=True):
@@ -22,7 +23,7 @@ def main():
                 print(f"{container.name} is unhealthy. Restarting...")
                 container.restart()
                 log_restart(container.name)
-        time.sleep(300) #5 minutes
+        time.sleep(minutes*60)
 
 if __name__ == "__main__":
     main()
