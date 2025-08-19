@@ -7,7 +7,7 @@ client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 def log_restart(container_name):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open('/watchcat/restarts.log', 'a') as f:
+    with open('/logs/restarts.log', 'a') as f:
         f.write(f"{timestamp} - Restarted container: {container_name}\n")
 
 def main():

@@ -8,6 +8,6 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./watchcat:/watchcat
+      - ./logs:/watchcat
     environment:
       - PYTHONUNBUFFERED=1
